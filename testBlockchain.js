@@ -94,18 +94,13 @@ async function main() {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 }
-async function putAsset(id, owner, location, price) {
+async function putAsset(id, lat_long, address, type, photo, hostID, state, guestID, price, resTimeIn, resTimeOut, checkInTime, checkOutTime) {
 	let result;
-	 		// Create a new gateway instance for interacting with the fabric network.
-		// In a real application this would be done as the backend server session is setup for
-		// a user that has been verified.
+	 	
 		const gateway = new Gateway();
 
 		try {
-			// setup the gateway instance
-			// The user will now be able to create connections to the fabric network and be able to
-			// submit transactions and query. All transactions submitted by this gateway will be
-			// signed by this user using the credentials stored in the wallet.
+
 			await gateway.connect(ccp, {
 				wallet,
 				identity: org1UserId,
@@ -118,25 +113,8 @@ async function putAsset(id, owner, location, price) {
 			// Get the contract from the network.
 			const contract = network.getContract(chaincodeName);
 
-			// Initialize a set of asset data on the channel using the chaincode 'InitLedger' function.
-			// This type of transaction would only be run once by an application the first time it was started after it
-			// deployed the first time. Any updates to the chaincode deployed later would likely not need to run
-			// an "init" type function.
-			//console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
-			//await contract.submitTransaction('InitLedger');
-			//console.log('*** Result: committed');
-
-			// Let's try a query type operation (function).
-			// This will be sent to just one peer and the results will be shown.
-			//console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
-			//let result = await contract.evaluateTransaction('GetAllAssets');
-			//console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-
-			// Now let's try to submit a transaction.
-			// This will be sent to both peers and if both peers endorse the transaction, the endorsed proposal will be sent
-			// to the orderer to be committed by each of the peer's to the channel ledger.
-			console.log('\n--> Submit Transaction: GenerateSpotAsset, creates new asset with ID, owner, location, price arguments');
-			result = await contract.submitTransaction('GenerateSpotAsset', id, owner, location, price);
+			console.log('\n--> Submit Transaction: RegisterSpotAsset, creates new asset with ID, owner, location, price arguments');
+			result = await contract.submitTransaction('RegisterSpotAsset', id, lat_long, address, type, photo, hostID, state, guestID, price, resTimeIn, resTimeOut, checkInTime, checkOutTime);
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
