@@ -8,6 +8,6 @@ router.post('/', (req, res, next) => {
         res.send(main.query());
     });
     
-});
+});   
 
 module.exports = router;
