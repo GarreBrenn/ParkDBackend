@@ -62,7 +62,6 @@ class AssetTransfer extends Contract {
             console.info(`Asset ${asset.ID} initialized`);
         }
     }
-
     // CreateAsset issues a new asset to the world state with given details.
     async CreateAsset(ctx, id, color, size, owner, appraisedValue) {
         const exists = await this.AssetExists(ctx, id);
@@ -80,22 +79,67 @@ class AssetTransfer extends Contract {
         await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
         return JSON.stringify(asset);
     }
-    async GenerateSpotAsset(ctx, id, owner, location, price) {
+    async RegisterSpotAsset(ctx, id, lat_long, address, type, photo, hostID, state, guestID, price, resTimeIn, resTimeOut, checkInTime, checkOutTime) {
         const exists = await this.AssetExists(ctx, id);
         if (exists) {
             throw new Error(`The asset ${id} already exists`);
         }
-
         const asset = {
-            ID: id,
-            Owner: owner,
-            Location: location,
-            Price: price,
-        };
+            ID: id, 
+            LatLong: lat_long, 
+            Address: address, 
+            Type: type, 
+            Photos: photo, 
+            HostID: hostID, 
+            GuestID: guestID, 
+            Price: price, 
+            ReservationTimeIn: resTimeIn, 
+            ReservationTimeOut: resTimeOut, 
+            CheckInTime: checkInTime, 
+            CheckOutTime: checkOutTime,
+            State: state
+        }
         await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
         return JSON.stringify(asset);
     }
-
+    async purchaseSpotAsset(ctx, id, guestID, timeIn, timeOut) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        asset.State = "rented";
+        asset.GuestID = guestID;
+        asset.ReservationTimeIn = timeIn;
+        asset.ReservationTimeOut = timeOut;
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
+    async disableSpotAsset(ctx, id) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        asset.State = "unavailable";
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
+    async updateAssetP(ctx, id, price, photos) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        if(price) {
+            asset.Price = price;
+        }
+        if(photos) {
+            asset.Photos = photos;
+        }
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
+    async checkIn(ctx, id, checkInTime) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        asset.checkInTime = checkInTime;
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
+    async checkOut(ctx, id, checkOutTime) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        asset.checkOutTime = checkOutTime;
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
     // ReadAsset returns the asset stored in the world state with given id.
     async ReadAsset(ctx, id) {
         const assetJSON = await ctx.stub.getState(id); // get the asset from chaincode state
