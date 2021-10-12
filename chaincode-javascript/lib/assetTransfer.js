@@ -13,47 +13,35 @@ class AssetTransfer extends Contract {
     async InitLedger(ctx) {
         const assets = [
             {
-                ID: 'asset1',
-                Color: 'blue',
-                Size: 5,
-                Owner: 'Tomoko',
-                AppraisedValue: 300,
+            ID: "1", 
+            LatLong: "141.21_21.21", 
+            Address: "1234 Some Address", 
+            Type: "SomeType", 
+            Photos: "110", 
+            HostID: "hostID1", 
+            GuestID: "guestID1", 
+            Price: 40, 
+            ReservationTimeIn: "resTimeInNull", 
+            ReservationTimeOut: "resTimeOutNull", 
+            CheckInTime: "checkTimeInNull", 
+            CheckOutTime: "checkTimeOutNull",
+            State: "Available" 
             },
             {
-                ID: 'asset2',
-                Color: 'red',
-                Size: 5,
-                Owner: 'Brad',
-                AppraisedValue: 400,
-            },
-            {
-                ID: 'asset3',
-                Color: 'green',
-                Size: 10,
-                Owner: 'Jin Soo',
-                AppraisedValue: 500,
-            },
-            {
-                ID: 'asset4',
-                Color: 'yellow',
-                Size: 10,
-                Owner: 'Max',
-                AppraisedValue: 600,
-            },
-            {
-                ID: 'asset5',
-                Color: 'black',
-                Size: 15,
-                Owner: 'Adriana',
-                AppraisedValue: 700,
-            },
-            {
-                ID: 'asset6',
-                Color: 'white',
-                Size: 15,
-                Owner: 'Michel',
-                AppraisedValue: 800,
-            },
+                ID: "2", 
+                LatLong: "101.21_42.21", 
+                Address: "9876 Another Address", 
+                Type: "SomeType", 
+                Photos: "1110", 
+                HostID: "hostID2", 
+                GuestID: "guestID2", 
+                Price: 60, 
+                ReservationTimeIn: "resTimeInNull", 
+                ReservationTimeOut: "resTimeOutNull", 
+                CheckInTime: "checkTimeInNull", 
+                CheckOutTime: "checkTimeOutNull",
+                State: "Unavailable" 
+                }
         ];
 
         for (const asset of assets) {

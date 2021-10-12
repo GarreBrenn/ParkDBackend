@@ -90,6 +90,30 @@ async function main() {
 		// and would be part of an administrative flow
 		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
 
+		const gateway = new Gateway();
+
+			try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org1UserId,
+				discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+			});
+
+			// Build a network instance based on the channel where the smart contract is deployed
+			const network = await gateway.getNetwork(channelName);
+
+			// Get the contract from the network.
+			const contract = network.getContract(chaincodeName);
+
+			const returner = await contract.submitTransaction('InitLedger')
+			if (`${returner}` !== '') {
+				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			}
+		}
+		finally {
+			gateway.disconnect();
+		}
+
 	} catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
