@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf wallet
 cd ./test-network/
 chmod +x network.sh
 . ./network.sh down

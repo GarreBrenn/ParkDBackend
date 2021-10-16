@@ -14,13 +14,13 @@ class AssetTransfer extends Contract {
         const assets = [
             {
             ID: "1", 
-            LatLong: "141.21_21.21", 
-            Address: "1234 Some Address", 
-            Type: "SomeType", 
-            Photos: "110", 
+            LatLong: "32.7824_-79.9382", 
+            Address: "39 Coming Street, Charleston, South Carolina", 
+            Type: "Driveway", 
+            Photos: "photosNull", 
             HostID: "hostID1", 
-            GuestID: "guestID1", 
-            Price: 40, 
+            GuestID: "guestIDNull", 
+            Price: 10, 
             ReservationTimeIn: "resTimeInNull", 
             ReservationTimeOut: "resTimeOutNull", 
             CheckInTime: "checkTimeInNull", 
@@ -29,19 +29,19 @@ class AssetTransfer extends Contract {
             },
             {
                 ID: "2", 
-                LatLong: "101.21_42.21", 
-                Address: "9876 Another Address", 
-                Type: "SomeType", 
-                Photos: "1110", 
+                LatLong: "32.782820_-79.938293", 
+                Address: "58 Coming St, Charleston, South Carolina", 
+                Type: "Street", 
+                Photos: "photosNull", 
                 HostID: "hostID2", 
-                GuestID: "guestID2", 
-                Price: 60, 
+                GuestID: "guestIDNull", 
+                Price: 5, 
                 ReservationTimeIn: "resTimeInNull", 
                 ReservationTimeOut: "resTimeOutNull", 
                 CheckInTime: "checkTimeInNull", 
                 CheckOutTime: "checkTimeOutNull",
-                State: "Unavailable" 
-                }
+                State: "Available" 
+            }
         ];
 
         for (const asset of assets) {
@@ -93,7 +93,7 @@ class AssetTransfer extends Contract {
     async purchaseSpotAsset(ctx, id, guestID, timeIn, timeOut) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        asset.State = "rented";
+        asset.State = "Rented";
         asset.GuestID = guestID;
         asset.ReservationTimeIn = timeIn;
         asset.ReservationTimeOut = timeOut;
@@ -102,7 +102,7 @@ class AssetTransfer extends Contract {
     async disableSpotAsset(ctx, id) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        asset.State = "unavailable";
+        asset.State = "Unavailable";
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
     async updateAssetP(ctx, id, price, photos) {
