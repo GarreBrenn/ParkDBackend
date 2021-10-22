@@ -41,7 +41,97 @@ class AssetTransfer extends Contract {
                 CheckInTime: "checkTimeInNull", 
                 CheckOutTime: "checkTimeOutNull",
                 State: "Available" 
-            }
+            },
+            {
+                ID: "3", 
+                LatLong: "32.7844_-79.9382", 
+                Address: "99 Coming Street, Charleston, South Carolina", 
+                Type: "Driveway", 
+                Photos: "photosNull", 
+                HostID: "hostID1", 
+                GuestID: "guestIDNull", 
+                Price: 10, 
+                ReservationTimeIn: "resTimeInNull", 
+                ReservationTimeOut: "resTimeOutNull", 
+                CheckInTime: "checkTimeInNull", 
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available" 
+                },
+                {
+                    ID: "4", 
+                    LatLong: "32.782620_-79.938493", 
+                    Address: "22 Coming St, Charleston, South Carolina", 
+                    Type: "Street", 
+                    Photos: "photosNull", 
+                    HostID: "hostID2", 
+                    GuestID: "guestIDNull", 
+                    Price: 5, 
+                    ReservationTimeIn: "resTimeInNull", 
+                    ReservationTimeOut: "resTimeOutNull", 
+                    CheckInTime: "checkTimeInNull", 
+                    CheckOutTime: "checkTimeOutNull",
+                    State: "Available" 
+                },
+                {
+                    ID: "5", 
+                    LatLong: "32.7834_-79.9482", 
+                    Address: "41 Coming Street, Charleston, South Carolina", 
+                    Type: "Driveway", 
+                    Photos: "photosNull", 
+                    HostID: "hostID1", 
+                    GuestID: "guestIDNull", 
+                    Price: 10, 
+                    ReservationTimeIn: "resTimeInNull", 
+                    ReservationTimeOut: "resTimeOutNull", 
+                    CheckInTime: "checkTimeInNull", 
+                    CheckOutTime: "checkTimeOutNull",
+                    State: "Available" 
+                    },
+                    {
+                        ID: "6", 
+                        LatLong: "32.782822_-79.938296", 
+                        Address: "60 Coming St, Charleston, South Carolina", 
+                        Type: "Street", 
+                        Photos: "photosNull", 
+                        HostID: "hostID2", 
+                        GuestID: "guestIDNull", 
+                        Price: 5, 
+                        ReservationTimeIn: "resTimeInNull", 
+                        ReservationTimeOut: "resTimeOutNull", 
+                        CheckInTime: "checkTimeInNull", 
+                        CheckOutTime: "checkTimeOutNull",
+                        State: "Available" 
+                    },
+                    {
+                        ID: "7", 
+                        LatLong: "32.7876_-79.9376", 
+                        Address: "222 Coming Street, Charleston, South Carolina", 
+                        Type: "Driveway", 
+                        Photos: "photosNull", 
+                        HostID: "hostID1", 
+                        GuestID: "guestIDNull", 
+                        Price: 10, 
+                        ReservationTimeIn: "resTimeInNull", 
+                        ReservationTimeOut: "resTimeOutNull", 
+                        CheckInTime: "checkTimeInNull", 
+                        CheckOutTime: "checkTimeOutNull",
+                        State: "Available" 
+                        },
+                        {
+                            ID: "8", 
+                            LatLong: "32.782840_-79.938223", 
+                            Address: "1 Coming St, Charleston, South Carolina", 
+                            Type: "Street", 
+                            Photos: "photosNull", 
+                            HostID: "hostID2", 
+                            GuestID: "guestIDNull", 
+                            Price: 5, 
+                            ReservationTimeIn: "resTimeInNull", 
+                            ReservationTimeOut: "resTimeOutNull", 
+                            CheckInTime: "checkTimeInNull", 
+                            CheckOutTime: "checkTimeOutNull",
+                            State: "Available" 
+                        }
         ];
 
         for (const asset of assets) {

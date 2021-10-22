@@ -170,6 +170,7 @@ async function purchaseSpotAsset(id, guestID, timeIn, timeOut){
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
 		} finally {
+			return result;
 			gateway.disconnect();
 		}
 }
@@ -294,4 +295,4 @@ try {
    return result;
 }
 }
-module.exports = {main, putAsset, query};
+module.exports = {main, putAsset, query, purchaseSpotAsset};
