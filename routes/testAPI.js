@@ -26,7 +26,10 @@ router.post('/query',  async (req, res, next) => {
         }
         if(input.price != null) {
             output.filter((d) => {
-                if(input.price < d.Price) {
+                if(input.price[1] < d.Price) {
+                    return false;
+                }
+                else if(input.price[0] > d.Price) {
                     return false;
                 }
                 return true;
