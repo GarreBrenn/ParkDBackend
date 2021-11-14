@@ -3,25 +3,18 @@ var router = express.Router();
 var main = require("../testBlockchain");
 router.post('/query',  async (req, res, next) => {
     let output = await main.query();
-    console.log(req.body)
     try {
         let input = req.body;
         if(input.startDate != null) {
             let startDate = new Date(input.startDate)
             output.filter((d) => {
-                if(startDate < d.ReservationTimeIn) {
-                    return false;
+                let flag = true;
+                for(let entries in d.Reservations) {
+                    if(!(startDate > entries.resTimeIn && input.endDate > entries.resTimeOut) || !(startDate < entries.resTimeIn && input.endDate < entries.resTimeOut)) {
+                        flag = false;
+                    }
                 }
-                return true;
-            })
-        }
-        if(input.endDate != null) {
-            let endDate = new Date(input.endDate)
-            output.filter((d) => {
-                if(endDate > d.ReservationTimeOut) {
-                    return false;
-                }
-                return true;
+                return flag;
             })
         }
         if(input.price != null) {
@@ -49,6 +42,22 @@ router.post('sell', async (req, res, next) => {
         req.body.price,"","","","");
         return output;
     }
-    )  
+    )
+
+router.post('/reserve', async (req, res, next) => {
+    let allAssets = await main.query();
+    for(let asset in allAssets) {
+        if(asset.id == req.body.id) {
+            let curReservations = asset.Reservations;
+            curReservations.push({
+                resTimeIn: req.body.timeIn,
+                resTimeOut: req.body.timeOut,
+                guestId: req.body.guestId,
+            })
+            await main.appendCheckin(req.body.id, curReservations);
+            break;
+        }
+    }
+})
 
 module.exports = router;

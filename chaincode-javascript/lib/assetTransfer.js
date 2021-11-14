@@ -20,7 +20,12 @@ class AssetTransfer extends Contract {
             Photos: "photosNull", 
             HostID: "hostID1", 
             GuestID: "guestIDNull", 
-            Price: 10, 
+            Price: 10,
+            Reservations: [{
+                resTimeIn: 199999,
+                resTimeOut: 200000,
+                guestId: 1
+            }],
             ReservationTimeIn: "resTimeInNull", 
             ReservationTimeOut: "resTimeOutNull", 
             CheckInTime: "checkTimeInNull", 
@@ -35,7 +40,12 @@ class AssetTransfer extends Contract {
                 Photos: "photosNull", 
                 HostID: "hostID2", 
                 GuestID: "guestIDNull", 
-                Price: 5, 
+                Price: 5,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
                 ReservationTimeIn: "resTimeInNull", 
                 ReservationTimeOut: "resTimeOutNull", 
                 CheckInTime: "checkTimeInNull", 
@@ -50,7 +60,12 @@ class AssetTransfer extends Contract {
                 Photos: "photosNull", 
                 HostID: "hostID1", 
                 GuestID: "guestIDNull", 
-                Price: 10, 
+                Price: 10,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
                 ReservationTimeIn: "resTimeInNull", 
                 ReservationTimeOut: "resTimeOutNull", 
                 CheckInTime: "checkTimeInNull", 
@@ -65,7 +80,12 @@ class AssetTransfer extends Contract {
                     Photos: "photosNull", 
                     HostID: "hostID2", 
                     GuestID: "guestIDNull", 
-                    Price: 5, 
+                    Price: 5,
+                    Reservations: [{
+                        resTimeIn: 199999,
+                        resTimeOut: 200000,
+                        guestId: 1
+                    }],
                     ReservationTimeIn: "resTimeInNull", 
                     ReservationTimeOut: "resTimeOutNull", 
                     CheckInTime: "checkTimeInNull", 
@@ -80,7 +100,12 @@ class AssetTransfer extends Contract {
                     Photos: "photosNull", 
                     HostID: "hostID1", 
                     GuestID: "guestIDNull", 
-                    Price: 10, 
+                    Price: 10,
+                    Reservations: [{
+                        resTimeIn: 199999,
+                        resTimeOut: 200000,
+                        guestId: 1
+                    }],
                     ReservationTimeIn: "resTimeInNull", 
                     ReservationTimeOut: "resTimeOutNull", 
                     CheckInTime: "checkTimeInNull", 
@@ -95,7 +120,12 @@ class AssetTransfer extends Contract {
                         Photos: "photosNull", 
                         HostID: "hostID2", 
                         GuestID: "guestIDNull", 
-                        Price: 5, 
+                        Price: 5,
+                        Reservations: [{
+                            resTimeIn: 199999,
+                            resTimeOut: 200000,
+                            guestId: 1
+                        }],
                         ReservationTimeIn: "resTimeInNull", 
                         ReservationTimeOut: "resTimeOutNull", 
                         CheckInTime: "checkTimeInNull", 
@@ -110,7 +140,12 @@ class AssetTransfer extends Contract {
                         Photos: "photosNull", 
                         HostID: "hostID1", 
                         GuestID: "guestIDNull", 
-                        Price: 10, 
+                        Price: 10,
+                        Reservations: [{
+                            resTimeIn: 199999,
+                            resTimeOut: 200000,
+                            guestId: 1
+                        }],
                         ReservationTimeIn: "resTimeInNull", 
                         ReservationTimeOut: "resTimeOutNull", 
                         CheckInTime: "checkTimeInNull", 
@@ -125,7 +160,12 @@ class AssetTransfer extends Contract {
                             Photos: "photosNull", 
                             HostID: "hostID2", 
                             GuestID: "guestIDNull", 
-                            Price: 5, 
+                            Price: 5,
+                            Reservations: [{
+                                resTimeIn: 199999,
+                                resTimeOut: 200000,
+                                guestId: 1
+                            }],
                             ReservationTimeIn: "resTimeInNull", 
                             ReservationTimeOut: "resTimeOutNull", 
                             CheckInTime: "checkTimeInNull", 
@@ -170,7 +210,8 @@ class AssetTransfer extends Contract {
             Photos: photo, 
             HostID: hostID, 
             GuestID: guestID, 
-            Price: price, 
+            Price: price,
+            Reservation: [],
             ReservationTimeIn: resTimeIn, 
             ReservationTimeOut: resTimeOut, 
             CheckInTime: checkInTime, 
@@ -287,6 +328,13 @@ class AssetTransfer extends Contract {
             result = await iterator.next();
         }
         return JSON.stringify(allResults);
+    }
+
+    async ReserveAsset(ctx, id, reservation) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        asset.Reservation = reservation;
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
 }
 
