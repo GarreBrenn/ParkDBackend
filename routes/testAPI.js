@@ -46,17 +46,18 @@ router.post('sell', async (req, res, next) => {
 
 router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
-    for(let asset in allAssets) {
-        if(asset.id == req.body.id) {
-            let curReservations = asset.Reservations;
-            curReservations.push({
-                resTimeIn: req.body.timeIn,
-                resTimeOut: req.body.timeOut,
-                guestId: req.body.guestId,
-            })
-            await main.appendCheckin(req.body.id, curReservations);
-            break;
-        }
+    for(let i = 0; i < allAssets.length; i++) {
+        console.log(allAssets[i])
+        //if(asset.id == req.body.id) {
+            //let curReservations = asset.Reservations;
+            //curReservations.push({
+            //    resTimeIn: req.body.timeIn,
+            //    resTimeOut: req.body.timeOut,
+            //    guestId: req.body.guestId,
+            //})
+            //await main.appendCheckin(req.body.id, curReservations);
+            //break;
+        //}
     }
 })
 
