@@ -335,7 +335,8 @@ class AssetTransfer extends Contract {
         const asset = JSON.parse(assetString);
         let res = JSON.stringify(reservation)
         asset.Reservations = res;
-        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+        return asset.Reservations
+        //ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
 }
 

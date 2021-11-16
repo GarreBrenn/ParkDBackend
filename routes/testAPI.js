@@ -67,7 +67,8 @@ router.post('/reserve', async (req, res, next) => {
                         guestId: req.body.guestId
                     })
                     console.log(curReservations);
-                    await main.appendCheckin(1, curReservations);
+                    let returnval = await main.appendCheckin(1, curReservations);
+                    console.log(returnval)
                     res.send("success :)")
                 }
                 else {
