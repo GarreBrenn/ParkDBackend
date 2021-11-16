@@ -11,7 +11,7 @@ router.post('/query',  async (req, res, next) => {
                 output.filter((d) => {
                     let flag = true;
                     for(let entries in d.Record.Reservations) {
-                        if(!(startDate > entries.resTimeIn && input.endDate > entries.resTimeOut) || !(startDate < entries.resTimeIn && input.endDate < entries.resTimeOut)) {
+                        if((startDate > entries.resTimeIn && startDate < entries.resTimeOut) || (input.endDate > entries.resTimeIn && input.endDate < entries.resTimeOut)) {
                             flag = false;
                         }
                     }
@@ -53,13 +53,25 @@ router.post('/reserve', async (req, res, next) => {
         for(let i = 0; i < good.length; i++) {
             if(good[i].Record.id === req.body.id) {
                 let curReservations = good[i].Record.Reservations;
-                curReservations.push({
-                    resTimeIn: req.body.timeIn,
-                    resTimeOut: req.body.timeOut,
-                    guestId: req.body.guestId,
-                })
-                await main.appendCheckin(req.body.id, curReservations);
-                res.send("success :)")
+                let flag = true;
+                for(let j = 0; j < curReservations.length; j++) {
+                    if((req.body.timeIn >= curReservations[j].resTimeIn && req.body.timeIn <= curReservations[j].resTimeOut) ||
+                        req.body.timeOut >= curReservations[j].resTimeIn && req.body.timeOut <= curReservations[j].resTimeOut) {
+                        flag = false;
+                    }
+                }
+                if(flag) {
+                    curReservations.push({
+                        resTimeIn: req.body.timeIn,
+                        resTimeOut: req.body.timeOut,
+                        guestId: req.body.guestId,
+                    })
+                    await main.appendCheckin(req.body.id, curReservations);
+                    res.send("success :)")
+                }
+                else {
+                    res.send("fail :(")
+                }
                 break;
             }
         }
