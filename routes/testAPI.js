@@ -45,20 +45,10 @@ router.post('sell', async (req, res, next) => {
     )
 
 router.post('/reserve', async (req, res, next) => {
-    let output = await main.query();
-    for(let i = 0; i < output.length; i++) {
-        console.log(output[i])
-        //if(asset.id == req.body.id) {
-            //let curReservations = asset.Reservations;
-            //curReservations.push({
-            //    resTimeIn: req.body.timeIn,
-            //    resTimeOut: req.body.timeOut,
-            //    guestId: req.body.guestId,
-            //})
-            //await main.appendCheckin(req.body.id, curReservations);
-            //break;
-        //}
-    }
+    main.query().then((data) => {
+        console.log(data)
+        res.send(data)
+    });
 })
 
 module.exports = router;
