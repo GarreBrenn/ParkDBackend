@@ -47,9 +47,11 @@ router.post('sell', async (req, res, next) => {
 
 router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
-    allAssets = JSON.parse(allAssets)
+    allAssets = await JSON.parse(allAssets)
+    console.log(allAssets);
     for(let asset in allAssets) {
-        if(asset.id == req.body.id) {
+        console.log(asset)
+        if(asset.id === req.body.id) {
             let curReservations = asset.Reservations;
             curReservations.push({
                 resTimeIn: req.body.timeIn,
