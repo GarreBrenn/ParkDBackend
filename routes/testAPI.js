@@ -51,9 +51,9 @@ router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         console.log(good)
-        for(let asset in good) {
-           console.log(asset)
-            console.log(asset.Record)
+        for(let i = 0; i < good.length; i++) {
+           console.log(good[i])
+            console.log(good[i].Record)
         //    if(asset.Record.id === req.body.id) {
         //        let curReservations = asset.Record.Reservations;
         //        curReservations.push({
