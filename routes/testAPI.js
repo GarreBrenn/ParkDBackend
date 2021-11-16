@@ -3,6 +3,7 @@ var router = express.Router();
 var main = require("../testBlockchain");
 router.post('/query',  async (req, res, next) => {
     let output = await main.query();
+    output = JSON.parse(output)
     try {
         let input = req.body;
         if(input.startDate != null) {
@@ -45,10 +46,20 @@ router.post('sell', async (req, res, next) => {
     )
 
 router.post('/reserve', async (req, res, next) => {
-    main.query().then((data) => {
-        console.log(JSON.parse(data))
-        res.send(data)
-    });
+    let allAssets = await main.query();
+    allAssets = JSON.parse(allAssets)
+    for(let asset in allAssets) {
+        if(asset.id == req.body.id) {
+            let curReservations = asset.Reservations;
+            curReservations.push({
+                resTimeIn: req.body.timeIn,
+                resTimeOut: req.body.timeOut,
+                guestId: req.body.guestId,
+            })
+            await main.appendCheckin(req.body.id, curReservations);
+            break;
+        }
+    }
 })
 
 module.exports = router;
