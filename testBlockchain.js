@@ -323,7 +323,7 @@ async function appendCheckin(id, reservation) {
 		result = await contract.submitTransaction('ReserveAsset', id, reservation);
 		console.log('*** Result: evaluated');
 		if (`${result}` !== '') {
-			console.log(`*** Result: ${JSON.parse(result)}`);
+			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 		}
 
 	} finally {
