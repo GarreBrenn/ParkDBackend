@@ -45,10 +45,9 @@ router.post('sell', async (req, res, next) => {
     )
 
 router.post('/reserve', async (req, res, next) => {
-    let allAssets = await main.query();
-    console.log(allAssets)
-    //for(let i = 0; i < allAssets.length; i++) {
-        //console.log(allAssets[i])
+    let output = await main.query();
+    for(let i = 0; i < output.length; i++) {
+        console.log(output[i])
         //if(asset.id == req.body.id) {
             //let curReservations = asset.Reservations;
             //curReservations.push({
@@ -59,7 +58,7 @@ router.post('/reserve', async (req, res, next) => {
             //await main.appendCheckin(req.body.id, curReservations);
             //break;
         //}
-    //}
+    }
 })
 
 module.exports = router;
