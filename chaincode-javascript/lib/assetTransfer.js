@@ -333,7 +333,11 @@ class AssetTransfer extends Contract {
     async ReserveAsset(ctx, id, reservation) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        asset.Reservation = reservation;
+        let output = ""
+        for(let i = 0; i < reservation.length; i++) {
+        	output += JSON.stringify(reservation[i])
+        }
+        asset.Reservations = output;
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
 }

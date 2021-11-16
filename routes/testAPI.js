@@ -38,7 +38,7 @@ router.post('/buy', async (req, res, next) => {
     let output = await main.purchaseSpotAsset(req.body.id, req.body.timeIn, req.body.timeOut);
     res.send(output)
 });
-router.post('sell', async (req, res, next) => {
+router.post('/sell', async (req, res, next) => {
     let output = await main.putAsset(
         req.body.id,req.body.latlong,req.body.address,req.body.type,
         req.body.photo,req.body.hostID,"Available",req.body.guestID,
@@ -51,7 +51,7 @@ router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
-            if(good[i].Record.id === req.body.id) {
+            if(good[i].Record.ID == req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
                 for(let j = 0; j < curReservations.length; j++) {
@@ -64,9 +64,10 @@ router.post('/reserve', async (req, res, next) => {
                     curReservations.push({
                         resTimeIn: req.body.timeIn,
                         resTimeOut: req.body.timeOut,
-                        guestId: req.body.guestId,
+                        guestId: req.body.guestId
                     })
-                    await main.appendCheckin(req.body.id, curReservations);
+                    console.log(curReservations);
+                    await main.appendCheckin(1, curReservations);
                     res.send("success :)")
                 }
                 else {
