@@ -54,16 +54,16 @@ router.post('/reserve', async (req, res, next) => {
         for(let i = 0; i < good.length; i++) {
            console.log(good[i])
             console.log(good[i].Record)
-        //    if(asset.Record.id === req.body.id) {
-        //        let curReservations = asset.Record.Reservations;
-        //        curReservations.push({
-        //            resTimeIn: req.body.timeIn,
-        //            resTimeOut: req.body.timeOut,
-        //            guestId: req.body.guestId,
-        //        })
-        //        await main.appendCheckin(req.body.id, curReservations);
-        //        break;
-        //    }
+            if(good[i].Record.id === req.body.id) {
+                let curReservations = good[i].Record.Reservations;
+                curReservations.push({
+                    resTimeIn: req.body.timeIn,
+                    resTimeOut: req.body.timeOut,
+                    guestId: req.body.guestId,
+                })
+                await main.appendCheckin(req.body.id, curReservations);
+                break;
+            }
         }
     })
 })
