@@ -46,7 +46,7 @@ router.post('sell', async (req, res, next) => {
 
 router.post('/reserve', async (req, res, next) => {
     main.query().then((data) => {
-        console.log(data)
+        console.log(JSON.parse(data))
         res.send(data)
     });
 })
