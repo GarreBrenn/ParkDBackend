@@ -10,7 +10,7 @@ router.post('/query',  async (req, res, next) => {
             let startDate = new Date(input.startDate)
             output.filter((d) => {
                 let flag = true;
-                for(let entries in d.Reservations) {
+                for(let entries in d.Record.Reservations) {
                     if(!(startDate > entries.resTimeIn && input.endDate > entries.resTimeOut) || !(startDate < entries.resTimeIn && input.endDate < entries.resTimeOut)) {
                         flag = false;
                     }
@@ -51,8 +51,8 @@ router.post('/reserve', async (req, res, next) => {
     console.log(allAssets);
     for(let asset in allAssets) {
         console.log(asset)
-        if(asset.id === req.body.id) {
-            let curReservations = asset.Reservations;
+        if(asset.Record.id === req.body.id) {
+            let curReservations = asset.Record.Reservations;
             curReservations.push({
                 resTimeIn: req.body.timeIn,
                 resTimeOut: req.body.timeOut,
