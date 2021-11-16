@@ -49,7 +49,7 @@ router.post('sell', async (req, res, next) => {
 
 router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
-    parseAssets(allAssets).then((good, bad) => {
+    parseAssets(allAssets).then(async (good, bad) => {
         for(let asset in good) {
             console.log(asset)
             if(asset.Record.id === req.body.id) {
