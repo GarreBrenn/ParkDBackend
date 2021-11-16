@@ -50,10 +50,7 @@ router.post('sell', async (req, res, next) => {
 router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
-        console.log(good)
         for(let i = 0; i < good.length; i++) {
-           console.log(good[i])
-            console.log(good[i].Record)
             if(good[i].Record.id === req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 curReservations.push({
@@ -62,6 +59,7 @@ router.post('/reserve', async (req, res, next) => {
                     guestId: req.body.guestId,
                 })
                 await main.appendCheckin(req.body.id, curReservations);
+                res.send("success :)")
                 break;
             }
         }
