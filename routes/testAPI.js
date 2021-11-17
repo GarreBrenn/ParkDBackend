@@ -54,16 +54,18 @@ router.post('/reserve', async (req, res, next) => {
             if(good[i].Record.ID == req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
+                let timeIn = new Date(req.body.timeIn);
+                let timeOut = new Date(req.body.timeOut)
                 for(let j = 0; j < curReservations.length; j++) {
-                    if((req.body.timeIn >= curReservations[j].resTimeIn && req.body.timeIn <= curReservations[j].resTimeOut) ||
-                        req.body.timeOut >= curReservations[j].resTimeIn && req.body.timeOut <= curReservations[j].resTimeOut) {
+                    if((timeIn >= curReservations[j].resTimeIn && timeIn <= curReservations[j].resTimeOut) ||
+                        (timeOut >= curReservations[j].resTimeIn && timeOut <= curReservations[j].resTimeOut)) {
                         flag = false;
                     }
                 }
                 if(flag) {
                     curReservations.push({
-                        resTimeIn: req.body.timeIn,
-                        resTimeOut: req.body.timeOut,
+                        resTimeIn: parseInt(req.body.timeIn),
+                        resTimeOut: parseInt(req.body.timeOut),
                         guestId: req.body.guestId
                     })
                     console.log(curReservations);
