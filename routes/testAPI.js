@@ -54,11 +54,12 @@ router.post('/reserve', async (req, res, next) => {
             if(good[i].Record.ID == req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
-                let timeIn = new Date(req.body.timeIn);
-                let timeOut = new Date(req.body.timeOut)
+                let timeIn = new Date(parseInt(req.body.timeIn));
+                let timeOut = new Date(parseInt(req.body.timeOut));
+                console.log(timeIn)
                 for(let j = 0; j < curReservations.length; j++) {
-                    if((timeIn >= curReservations[j].resTimeIn && timeIn <= curReservations[j].resTimeOut) ||
-                        (timeOut >= curReservations[j].resTimeIn && timeOut <= curReservations[j].resTimeOut)) {
+                    if((timeIn >= new Date(curReservations[j].resTimeIn) && timeIn <= new Date(curReservations[j].resTimeOut)) ||
+                        (timeOut >= new Date(curReservations[j].resTimeIn) && timeOut <= new Date(curReservations[j].resTimeOut))) {
                         flag = false;
                     }
                 }
@@ -69,7 +70,7 @@ router.post('/reserve', async (req, res, next) => {
                         guestId: req.body.guestId
                     })
                     console.log(curReservations);
-                    await main.appendCheckin(1, JSON.stringify(curReservations));
+                    await main.appendCheckin(req.body.id, JSON.stringify(curReservations));
                     res.send("success :)")
                 }
                 else {

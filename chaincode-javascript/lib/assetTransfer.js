@@ -162,8 +162,8 @@ class AssetTransfer extends Contract {
                             GuestID: "guestIDNull", 
                             Price: 5,
                             Reservations: [{
-                                resTimeIn: 199999,
-                                resTimeOut: 20000000000,
+                                resTimeIn: 1637121835000,
+                                resTimeOut: 1637125835000,
                                 guestId: 1
                             }],
                             ReservationTimeIn: "resTimeInNull", 
