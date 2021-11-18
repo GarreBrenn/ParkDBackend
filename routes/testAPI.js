@@ -18,14 +18,25 @@ router.post('/query',  async (req, res, next) => {
                     return flag;
                 })
             }
-            if(input.price != null) {
-                output.filter((d) => {
-                    if(input.price < d.Price) {
-                        return false;
+
+            if(input.priceLow != null) {
+                output = output.filter((d) => {
+                    if(input.priceLow <= d.Record.Price) {
+                        return true;
                     }
-                    return true;
+                    return false;
                 })
             }
+
+            if(input.priceHigh != null) {
+                output = output.filter((d) => {
+                    if(input.priceHigh >= d.Record.Price) {
+                        return true;
+                    }
+                    return false;
+                })
+            }
+
             res.send(output);
         }
         catch(e) {
@@ -56,7 +67,6 @@ router.post('/reserve', async (req, res, next) => {
                 let flag = true;
                 let timeIn = new Date(parseInt(req.body.timeIn));
                 let timeOut = new Date(parseInt(req.body.timeOut));
-                console.log(timeIn)
                 for(let j = 0; j < curReservations.length; j++) {
                     if((timeIn >= new Date(curReservations[j].resTimeIn) && timeIn <= new Date(curReservations[j].resTimeOut)) ||
                         (timeOut >= new Date(curReservations[j].resTimeIn) && timeOut <= new Date(curReservations[j].resTimeOut))) {
@@ -69,7 +79,6 @@ router.post('/reserve', async (req, res, next) => {
                         resTimeOut: parseInt(req.body.timeOut),
                         guestId: req.body.guestId
                     })
-                    console.log(curReservations);
                     await main.appendCheckin(req.body.id, JSON.stringify(curReservations));
                     res.send("success :)")
                 }
