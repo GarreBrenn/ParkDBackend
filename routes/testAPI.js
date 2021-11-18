@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+const authController = require('../controllers/auth');
+
 var main = require("../testBlockchain");
 router.post('/query',  async (req, res, next) => {
     let output = await main.query();
@@ -18,25 +20,14 @@ router.post('/query',  async (req, res, next) => {
                     return flag;
                 })
             }
-
-            if(input.priceLow != null) {
-                output = output.filter((d) => {
-                    if(input.priceLow <= d.Record.Price) {
-                        return true;
+            if(input.price != null) {
+                output.filter((d) => {
+                    if(input.price < d.Price) {
+                        return false;
                     }
-                    return false;
+                    return true;
                 })
             }
-
-            if(input.priceHigh != null) {
-                output = output.filter((d) => {
-                    if(input.priceHigh >= d.Record.Price) {
-                        return true;
-                    }
-                    return false;
-                })
-            }
-
             res.send(output);
         }
         catch(e) {
@@ -49,7 +40,7 @@ router.post('/buy', async (req, res, next) => {
     let output = await main.purchaseSpotAsset(req.body.id, req.body.timeIn, req.body.timeOut);
     res.send(output)
 });
-router.post('/sell', async (req, res, next) => {
+router.post('sell', async (req, res, next) => {
     let output = await main.putAsset(
         req.body.id,req.body.latlong,req.body.address,req.body.type,
         req.body.photo,req.body.hostID,"Available",req.body.guestID,
@@ -62,24 +53,22 @@ router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
-            if(good[i].Record.ID == req.body.id) {
+            if(good[i].Record.id === req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
-                let timeIn = new Date(parseInt(req.body.timeIn));
-                let timeOut = new Date(parseInt(req.body.timeOut));
                 for(let j = 0; j < curReservations.length; j++) {
-                    if((timeIn >= new Date(curReservations[j].resTimeIn) && timeIn <= new Date(curReservations[j].resTimeOut)) ||
-                        (timeOut >= new Date(curReservations[j].resTimeIn) && timeOut <= new Date(curReservations[j].resTimeOut))) {
+                    if((req.body.timeIn >= curReservations[j].resTimeIn && req.body.timeIn <= curReservations[j].resTimeOut) ||
+                        req.body.timeOut >= curReservations[j].resTimeIn && req.body.timeOut <= curReservations[j].resTimeOut) {
                         flag = false;
                     }
                 }
                 if(flag) {
                     curReservations.push({
-                        resTimeIn: parseInt(req.body.timeIn),
-                        resTimeOut: parseInt(req.body.timeOut),
-                        guestId: req.body.guestId
+                        resTimeIn: req.body.timeIn,
+                        resTimeOut: req.body.timeOut,
+                        guestId: req.body.guestId,
                     })
-                    await main.appendCheckin(req.body.id, JSON.stringify(curReservations));
+                    await main.appendCheckin(req.body.id, curReservations);
                     res.send("success :)")
                 }
                 else {
@@ -90,6 +79,12 @@ router.post('/reserve', async (req, res, next) => {
         }
     })
 })
+
+router.post("/register", authController.register)
+router.post('/login', authController.login)
+
+
+
 function parseAssets(asset) {
     return new Promise((resolve, reject) => {
         let output = JSON.parse(asset);
