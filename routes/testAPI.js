@@ -45,6 +45,51 @@ router.post('/query',  async (req, res, next) => {
     })
 
 });
+router.post('/getreservation', async (req, res, next) => {
+    let output = await main.query();
+    parseAssets(output).then((output, bad) => {
+    	try {
+    	    let input = req.body;
+            console.log("input")
+            console.log(input)
+    	    if (input.spotID != null) {
+    	    	output = output.filter((d) => {
+                    if (d.Record.ID == input.spotID) {
+                        console.log("1");
+                        parseAssets(d.Record.Reservations).then(async (good, bad) => {
+                            console.log(good);
+                        })
+                        console.log("2")
+                        parseAssets(d.Record).then(async (good, bad) => {
+                            console.log(good);
+                        })
+                        console.log("3")
+                        parseAssets(d).then(async (good, bad) => {
+                            console.log(good);
+                        })
+                    	// for(let reservation in parseAssets(d.Record.Reservations)) {
+                        //     console.log("reservation");
+                        //     console.log(reservation);
+                    	//     console.log("input guest ID: " + input.guestID);
+                    	//     console.log("record spot ID: " + reservation.guestId);
+                    	//     if (reservation.guestId == input.guestID) {
+                    	//     	console.log("this should pass\n");
+                    	//     	return true;
+                    	//     }
+                    	// }
+                    }
+                    return false;
+                })
+                console.log("\n\noutput");
+                console.log(output);
+                console.log("after output");
+                res.send(output);
+    	    }
+    	} catch(e) {
+    	    res.send(e)
+    	}
+    });
+});
 router.post('/buy', async (req, res, next) => {
     let output = await main.purchaseSpotAsset(req.body.id, req.body.timeIn, req.body.timeOut);
     res.send(output)
