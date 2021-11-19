@@ -54,19 +54,27 @@ router.post('/getreservation', async (req, res, next) => {
             console.log(input)
     	    if (input.spotID != null) {
     	    	output = output.filter((d) => {
-                    if (d.Record.ID == input.spotID) {
-                        console.log("1");
-                        parseAssets(d.Record.Reservations).then(async (good, bad) => {
-                            console.log(good);
-                        })
-                        console.log("2")
-                        parseAssets(d.Record).then(async (good, bad) => {
-                            console.log(good);
-                        })
-                        console.log("3")
-                        parseAssets(d).then(async (good, bad) => {
-                            console.log(good);
-                        })
+                    if(input.spotID == d.Record.ID) {
+                        for(let i = 0; i < d.Record.Reservations.length; i++) {
+                            console.log(d.Record.Reservations[i])
+                        }
+                    }
+                    
+                    //console.log(d)
+                    //console.log(d.Record)
+                    //if (d.Record.ID == input.spotID) {
+                     //   console.log("1");
+                     //   parseAssets(d.Record.Reservations).then(async (good, bad) => {
+                     //       console.log(good);
+                     //   })
+                     //   console.log("2")
+                     //   parseAssets(d.Record).then(async (good, bad) => {
+                     //       console.log(good);
+                     //   })
+                     //   console.log("3")
+                    //    parseAssets(d).then(async (good, bad) => {
+                    //        console.log(good);
+                        //})
                     	// for(let reservation in parseAssets(d.Record.Reservations)) {
                         //     console.log("reservation");
                         //     console.log(reservation);
@@ -77,7 +85,7 @@ router.post('/getreservation', async (req, res, next) => {
                     	//     	return true;
                     	//     }
                     	// }
-                    }
+                    //}
                     return false;
                 })
                 console.log("\n\noutput");
