@@ -102,7 +102,7 @@ exports.login = async (req, res) =>{
                     httpOnly: true
             }
             // the user's been logged in, now put the cookie in the browser.
-            res.cookie('theCookie', token, cookieOptions);
+            res.cookie('jwt', token, cookieOptions);
             // TODO: CHANGE THIS TO GARRETT'S HOMEPAGE
             res.status(200).redirect("http://localhost:3006"); // redirect user to homepage
 
@@ -119,7 +119,7 @@ exports.login = async (req, res) =>{
 }
 
 exports.logout = async(req, res)=>{
-    res.cookie('theCookie', 'logout', {
+    res.cookie('jwt', 'logout', {
         // change cookie expire date to 2 seconds from now (or whatever)
         expires: new Date(Date.now() + 2*1000),
         // again making sure to thwart naughty people
@@ -136,7 +136,7 @@ exports.isLoggedIn = async(req, res, next) =>{
     if (req.cookies.jwt){
         try{
             // check if the cookie token matches my super secret password as defined in the .env file
-            const decoded = await promisify(jwt.verify)(req.cookies.jtw, process.JWT_SECRET);
+            const decoded = await promisify(jwt.verify)(req.cookies.jtw, process.env.JWT_SECRET);
             console.log(decoded);
 
             // check if the user still exists
@@ -145,7 +145,7 @@ exports.isLoggedIn = async(req, res, next) =>{
                 if(!result){
                     return next();
                 }
-                req.user = result[0];
+                req.user = result[0]; // email is the 0'th collumn in the database
                 return next();
             });
         }
@@ -156,6 +156,7 @@ exports.isLoggedIn = async(req, res, next) =>{
     }
     else{
         // the nerd isn't logged in
+        //res.status(403).redirect('/login')
         next();
     }
     // do something else with the next()

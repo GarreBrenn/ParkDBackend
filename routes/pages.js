@@ -19,7 +19,9 @@ router.get("/login", (req, res) =>{
 // this would be a "private" page that only logged in people can see. Definitely the "sell" page, but based off feedback maybe the "buy" page too?
 router.get('/PLACEHOLDER', authController.isLoggedIn, (req, res) =>{
     if (req.user){
-        res.render('PLACEHOLDER');
+        res.render('PLACEHOLDER', {
+            userInfo: req.user //pass in the user information to that page
+        });
     }
     else{
         res.redirect('/login')
