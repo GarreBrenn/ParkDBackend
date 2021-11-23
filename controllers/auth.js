@@ -27,14 +27,17 @@ exports.register = (req, res) =>{
         // get back an array of emails matching the registered email.
         // Get the length of that array. If it's above 0, they already registered.
         if(results.length > 0){
-            return res.render('http://localhost:3006/register', {
-                message: 'Email is already registered, dum dum.'
-            })  
+            res.send("Email is already registered. Use a different email or login instead")
+            
+            //return res.render('http://localhost:3006/register', {
+            //    message: 'Email is already registered, dum dum.'
+            //})  
         }
         else if(password != passwordConfirm){
-            return res.render('http://localhost:3006/register', {
-                message: "Password mismatch."
-            })
+            res.send("Password mismatch")
+            //return res.render('http://localhost:3006/register', {
+            //    message: "Password mismatch."
+            //})
         }
         // password is hashed 8 times for safety.
         let hashedPassword = await bcrypt.hash(password, 8);
@@ -46,9 +49,10 @@ exports.register = (req, res) =>{
                 console.log(error);
             }
             else{
-                return res.render('http://localhost:3006/register',{
-                    message: 'Successfully registered!'
-                });
+                res.send("Registered. You may login with these credentials");
+                //return res.render('http://localhost:3006/register',{
+                //    message: 'Successfully registered!'
+                //});
             }
         })
     });
@@ -69,17 +73,19 @@ exports.login = async (req, res) =>{
         const email = req.body.Email;
         const password = req.body.Password; 
         if (!email || !password){
-            return res.status(400).render('http://localhost:3006/login', {
-                message: 'Provide email and/or password'
-            })
+            res.send("Provide an email and/or password")
+            //return res.status(400).render('http://localhost:3006/login', {
+            //    message: 'Provide email and/or password'
+            //})
         }
     // for testing = deez@nuts.com, pass: 1234 is a valid login
     db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results)=>{
         // their email doesn't come back OR their password doesn't match the hashed one on the DB.
         if(!results || !(await bcrypt.compare(password, results[0].password))){
-            res.status(401).render('http://localhost:3006/login', {
-                message: 'Email and/or password is incorrect. Try again.'
-            })
+            res.send("Email and/or password incorrect. Try again")
+            //res.status(401).render('http://localhost:3006/login', {
+            //    message: 'Email and/or password is incorrect. Try again.'
+            //})
         } else{
             // cookie stuff
             const id = results[0].id;
