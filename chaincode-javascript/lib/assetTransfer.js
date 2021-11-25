@@ -247,16 +247,16 @@ class AssetTransfer extends Contract {
         }
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
-    async checkIn(ctx, id, checkInTime) {
+    async checkIn(ctx, id, checkInTime, reservationIndex) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        asset.checkInTime = checkInTime;
+        asset.Reservations[reservationIndex].checkInTime = checkInTime;
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
-    async checkOut(ctx, id, checkOutTime) {
+    async checkOut(ctx, id, checkOutTime, reservationIndex) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        asset.checkOutTime = checkOutTime;
+        asset.Reservations[reservationIndex].checkOutTime = checkOutTime;
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
     // ReadAsset returns the asset stored in the world state with given id.

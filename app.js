@@ -10,6 +10,17 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testApiRouter = require("./routes/testAPI");
 var app = express();
+
+const mysql = require("mysql");
+const dotenv = require('dotenv');
+dotenv.config({path: './.env'});
+const db = mysql.createConnection({
+  host: 'localhost', // or change to public IP if using an SQL server on another computer
+  user: 'root',
+  password: '00098636', //not my phone password
+  database: 'parkD'
+});
+
 app.use(cors());
 main.main();
 // view engine setup
@@ -40,5 +51,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+db.connect((error)=>{
+  if(error){
+      console.log("Error connecting :(");
+  }
+  else{
+      console.log("Connected to MYSQL database!");
+  }
+})
+app.use('/auth', require('./routes/auth'));
+
 
 module.exports = app;

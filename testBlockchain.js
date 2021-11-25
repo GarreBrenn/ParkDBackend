@@ -216,7 +216,7 @@ async function updateAssetP(id, price, photos){
 			gateway.disconnect();
 		}
 }
-async function checkIn(id, checkInTime){
+async function checkIn(id, checkInTime, reservationIndex){
 	let result;
 		const gateway = new Gateway();
 		try {
@@ -229,7 +229,7 @@ async function checkIn(id, checkInTime){
 
 			const contract = network.getContract(chaincodeName);
 
-			result = await contract.submitTransaction('checkIn', id, checkInTime);
+			result = await contract.submitTransaction('checkIn', id, checkInTime, reservationIndex);
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
@@ -237,7 +237,7 @@ async function checkIn(id, checkInTime){
 			gateway.disconnect();
 		}
 }
-async function checkOut(id, checkOutTime){
+async function checkOut(id, checkOutTime, reservationIndex){
 	let result;
 		const gateway = new Gateway();
 		try {
@@ -250,7 +250,7 @@ async function checkOut(id, checkOutTime){
 
 			const contract = network.getContract(chaincodeName);
 
-			result = await contract.submitTransaction('checkOut', id, checkOutTime);
+			result = await contract.submitTransaction('checkOut', id, checkOutTime, reservationIndex);
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
@@ -334,4 +334,4 @@ async function appendCheckin(id, reservation) {
 	}
 }
 
-module.exports = {main, putAsset, query, purchaseSpotAsset, appendCheckin};
+module.exports = {main, putAsset, query, purchaseSpotAsset, appendCheckin, checkIn, checkOut};
