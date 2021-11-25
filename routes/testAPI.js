@@ -1,6 +1,15 @@
 var express = require("express");
 var router = express.Router();
 const authController = require('../controllers/auth');
+const mysql = require("mysql");
+const jwt = require('jsonwebtoken');
+
+const db = mysql.createConnection({
+    host: 'localhost', // or change to public IP if using an SQL server on another computer
+    user: 'root',
+    password: '00098636', //not my phone password
+    database: 'parkD'
+});
 
 var main = require("../testBlockchain");
 router.post('/query',  async (req, res, next) => {
@@ -80,9 +89,9 @@ router.post('/reserve', async (req, res, next) => {
     })
 })
 
-router.post("/register", authController.register)
+router.post("/registe", authController.register)
 router.post('/login', authController.login)
-router.post('/tempPage', authController.isLoggedIn) // one for each of the private pages once they're created. Buy, sell dashboard, browse, etc.
+//router.post('/tempPage', authController.isLoggedIn) // one for each of the private pages once they're created. Buy, sell dashboard, browse, etc.
 
 
 function parseAssets(asset) {
@@ -97,3 +106,39 @@ function parseAssets(asset) {
     })
 }
 module.exports = router;
+
+router.get('/isLoggedIn', async(req, res, next) =>{
+    // check to see if jwt a cookie exists
+    console.log("hello world");
+    console.log(req);
+    console.log(req.cookies);
+    if (req.cookies.jwt){
+        try{
+            // check if the cookie token matches my super secret password as defined in the .env file
+            const decoded = await promisify(jwt.verify)(req.cookies.jtw, process.env.JWT_SECRET);
+            console.log(decoded);
+
+            // check if the user still exists
+            db.query('SELECT * FROM users WHERE email = ?', [decoded.email], (error, result) =>{
+                console.log(result);
+                if(!result){
+                    return next();
+                }
+                req.userMail = result[0]; // email is the 0'th collumn in the database
+                //res.user = result[0];
+                return next();
+            });
+        }
+        catch(error){
+        console.log(error);
+        return next();
+        }
+    }
+    else{
+        // the nerd isn't logged in
+        //res.status(403).redirect('/login')
+        next();
+    }
+    // do something else with the next()
+    next();
+})

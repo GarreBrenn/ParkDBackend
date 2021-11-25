@@ -1,7 +1,9 @@
+
 const mysql = require("mysql");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const promisify = require('util');
+
 
 // found in app.js
 const db = mysql.createConnection({
@@ -87,9 +89,10 @@ exports.login = async (req, res) =>{
             //    message: 'Email and/or password is incorrect. Try again.'
             //})
         } else{
-            // cookie stuff
-            const id = results[0].id;
+            /* // cookie stuff
 
+            const id = results[0].id;
+            
             // Cookie expiration date and password are stored in a separate file ".env".
             // Can change the cookie password and expiration date according to our needs.
             
@@ -106,9 +109,13 @@ exports.login = async (req, res) =>{
                     ),
                     // just for security so naughty people can't steal muh data
                     httpOnly: true
-            }
+            } */
             // the user's been logged in, now put the cookie in the browser.
-            res.cookie('jwt', token, cookieOptions);
+            //res.cookie('jwt', token, cookieOptions);
+            //document.cookie = "email=test.com; SameSite=None";
+            res.cookie('title', 'WowItsNotHashedAnymore@');
+            res.cookie('email', results[0].email)
+            res.cookie('password', results[0].password)
             // TODO: CHANGE THIS TO GARRETT'S HOMEPAGE
             res.status(200).redirect("http://localhost:3006"); // redirect user to homepage
 
@@ -138,6 +145,8 @@ exports.logout = async(req, res)=>{
 
 exports.isLoggedIn = async(req, res, next) =>{
     // check to see if jwt a cookie exists
+    console.log("hello world");
+    console.log(req);
     console.log(req.cookies);
     if (req.cookies.jwt){
         try{
@@ -151,7 +160,8 @@ exports.isLoggedIn = async(req, res, next) =>{
                 if(!result){
                     return next();
                 }
-                req.user = result[0]; // email is the 0'th collumn in the database
+                req.userMail = result[0]; // email is the 0'th collumn in the database
+                res.user = result[0];
                 return next();
             });
         }
