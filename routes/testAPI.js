@@ -46,7 +46,9 @@ router.post('/query',  async (req, res, next) => {
 
 });
 router.post('/getreservation', async (req, res, next) => {
+//THIS ASSUMES A GUEST ONLY MAKES ONE RESERVATION
     let output = await main.query();
+    let reservationIndex = null;
     parseAssets(output).then((output, bad) => {
     	try {
     	    let input = req.body;
@@ -56,42 +58,25 @@ router.post('/getreservation', async (req, res, next) => {
     	    	output = output.filter((d) => {
                     if(input.spotID == d.Record.ID) {
                         for(let i = 0; i < d.Record.Reservations.length; i++) {
-                            console.log(d.Record.Reservations[i])
+                            const reservation = d.Record.Reservations[i];
+                            console.log(reservation)
+                            console.log("input guest ID: " + input.guestID);
+                    	     console.log("record spot ID: " + reservation.guestId);
+                    	     if (reservation.guestId == input.guestID) {
+                    	     	console.log("this should pass\n");
+                    	     	reservationIndex = i;
+                    	     	return true;
+                    	     }
                         }
                     }
-                    
-                    //console.log(d)
-                    //console.log(d.Record)
-                    //if (d.Record.ID == input.spotID) {
-                     //   console.log("1");
-                     //   parseAssets(d.Record.Reservations).then(async (good, bad) => {
-                     //       console.log(good);
-                     //   })
-                     //   console.log("2")
-                     //   parseAssets(d.Record).then(async (good, bad) => {
-                     //       console.log(good);
-                     //   })
-                     //   console.log("3")
-                    //    parseAssets(d).then(async (good, bad) => {
-                    //        console.log(good);
-                        //})
-                    	// for(let reservation in parseAssets(d.Record.Reservations)) {
-                        //     console.log("reservation");
-                        //     console.log(reservation);
-                    	//     console.log("input guest ID: " + input.guestID);
-                    	//     console.log("record spot ID: " + reservation.guestId);
-                    	//     if (reservation.guestId == input.guestID) {
-                    	//     	console.log("this should pass\n");
-                    	//     	return true;
-                    	//     }
-                    	// }
-                    //}
                     return false;
                 })
-                console.log("\n\noutput");
-                console.log(output);
-                console.log("after output");
-                res.send(output);
+                const response = {
+                	valid: true ? output[0] != null : false,
+                	spot: output[0],
+                	reservationIndex: reservationIndex
+                }
+                res.send(response);
     	    }
     	} catch(e) {
     	    res.send(e)
