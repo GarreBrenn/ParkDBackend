@@ -110,7 +110,24 @@ router.post('/sell', async (req, res, next) => {
         return output;
     }
     )
-
+router.post('/checkin', async (req, res, next) => {
+    try {
+        let output = await main.checkIn(req.body.spotKey, req.body.CheckInTime, req.body.reservationIndex);
+        res.send("bipityboo")
+    }
+    catch(e) {
+        res.send(e)
+    }
+})
+router.post('/checkout', async (req, res, next) => {
+    try {
+        let output = await main.checkOut(req.body.spotKey, req.body.CheckOutTime, req.body.reservationIndex);
+        res.send("bipityboo")
+    }
+    catch(e) {
+        res.send(e)
+    }
+})
 router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
