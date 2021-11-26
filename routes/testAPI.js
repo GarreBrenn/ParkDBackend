@@ -144,7 +144,7 @@ router.post('/reserve', async (req, res, next) => {
     })
 })
 
-router.post("/registe", authController.register)
+router.post("/register", authController.register)
 router.post('/login', authController.login)
 //router.post('/tempPage', authController.isLoggedIn) // one for each of the private pages once they're created. Buy, sell dashboard, browse, etc.
 
