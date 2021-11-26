@@ -97,19 +97,27 @@ router.post('sell', async (req, res, next) => {
     )
 router.post('/checkin', async (req, res, next) => {
     try {
+        if(!req.body.spotKey || !req.body.CheckInTime || !req.body.reservationIndex) {
+            throw {status: 400, message: "all requisite request parameters not included"}
+        }
         let output = await main.checkIn(req.body.spotKey, req.body.CheckInTime, req.body.reservationIndex);
         res.send("bipityboo")
     }
     catch(e) {
+        res.status(400)
         res.send(e)
     }
 })
 router.post('/checkout', async (req, res, next) => {
     try {
+        if(!req.body.spotKey || !req.body.CheckOutTime || !req.body.reservationIndex) {
+            throw {status: 400, message: "all requisite request parameters not included"}
+        }
         let output = await main.checkOut(req.body.spotKey, req.body.CheckOutTime, req.body.reservationIndex);
         res.send("bipityboo")
     }
     catch(e) {
+        res.status(400)
         res.send(e)
     }
 })
