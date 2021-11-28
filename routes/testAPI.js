@@ -102,7 +102,7 @@ router.post('/buy', async (req, res, next) => {
     let output = await main.purchaseSpotAsset(req.body.id, req.body.timeIn, req.body.timeOut);
     res.send(output)
 });
-router.post('sell', async (req, res, next) => {
+router.post('/sell', async (req, res, next) => {
     let output = await main.putAsset(
         req.body.id,req.body.latlong,req.body.address,req.body.type,
         req.body.photo,req.body.hostID,"Available",req.body.guestID,
@@ -130,6 +130,56 @@ router.post('/checkout', async (req, res, next) => {
         }
         let output = await main.checkOut(req.body.spotKey, req.body.CheckOutTime, req.body.reservationIndex);
         res.send("bipityboo")
+    }
+    catch(e) {
+        res.status(400)
+        res.send(e)
+    }
+})
+router.get('/getspotbyid', async (req, res, next) => {
+    let allAssets = await main.query();
+    parseAssets(allAssets).then(async (good, bad) => {
+        for(let i = 0; i < good.length; i++) {
+            if(good[i].Record.id === req.body.id) {
+                    res.send(good[i].Record)
+                    break;
+                }
+            //im doing it like this because im lazy :)
+            if(i == good.length - 1) {
+                res.status(400);
+                res.send("uh oh")
+                break;
+            }
+        }
+
+    })
+})
+router.get('/gethostspots', async (req, res, next) => {
+    let allSpots = [];
+    let allAssets = await main.query();
+    parseAssets(allAssets).then(async (good, bad) => {
+        for(let i = 0; i < good.length; i++) {
+            if(good[i].Record.HostID === req.body.HostID) {
+                allSpots.push(good[i].Record);
+            }
+        }
+        res.send(allSpots)
+    })
+})
+router.post('/removespot', async (req, res, next) => {
+    try {
+        let result = await main.deleteAsset(req.body.id)
+        res.send(result);
+    }
+    catch(e) {
+        res.status(400)
+        res.send(e)
+    }
+})
+router.post('/update', async (req, res, next) => {
+    try {
+        let result = await main.updateAssetP(req.body.id, req.body.price, req.body.photos, req.body.state)
+        res.send(result);
     }
     catch(e) {
         res.status(400)

@@ -195,7 +195,7 @@ async function disableSpotAsset(id){
 			gateway.disconnect();
 		}
 }
-async function updateAssetP(id, price, photos){
+async function updateAssetP(id, price, photos, state){
 	let result;
 		const gateway = new Gateway();
 		try {
@@ -208,7 +208,7 @@ async function updateAssetP(id, price, photos){
 
 			const contract = network.getContract(chaincodeName);
 
-			result = await contract.submitTransaction('updateAssetP', id, price, photos);
+			result = await contract.submitTransaction('updateAssetP', id, price, photos, state);
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
@@ -257,6 +257,27 @@ async function checkOut(id, checkOutTime, reservationIndex){
 		} finally {
 			gateway.disconnect();
 		}
+}
+async function deleteAsset(id){
+	let result;
+	const gateway = new Gateway();
+	try {
+		await gateway.connect(ccp, {
+			wallet,
+			identity: org1UserId,
+			discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+		});
+		const network = await gateway.getNetwork(channelName);
+
+		const contract = network.getContract(chaincodeName);
+
+		result = await contract.submitTransaction('DeleteAsset', id);
+		if (`${result}` !== '') {
+			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+		}
+	} finally {
+		gateway.disconnect();
+	}
 }
 async function query() {
 	let result;
@@ -334,4 +355,5 @@ async function appendCheckin(id, reservation) {
 	}
 }
 
-module.exports = {main, putAsset, query, purchaseSpotAsset, appendCheckin, checkIn, checkOut};
+
+module.exports = {main, putAsset, query, purchaseSpotAsset, appendCheckin, checkIn, checkOut, deleteAsset, updateAssetP};

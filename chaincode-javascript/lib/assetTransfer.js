@@ -236,7 +236,7 @@ class AssetTransfer extends Contract {
         asset.State = "Unavailable";
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
-    async updateAssetP(ctx, id, price, photos) {
+    async updateAssetP(ctx, id, price, photos, state) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
         if(price) {
@@ -244,6 +244,9 @@ class AssetTransfer extends Contract {
         }
         if(photos) {
             asset.Photos = photos;
+        }
+        if(state){
+            asset.State = state;
         }
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
