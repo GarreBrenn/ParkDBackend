@@ -121,7 +121,7 @@ router.post('/checkout', async (req, res, next) => {
         res.send(e)
     }
 })
-router.get('/getspotbyid', async (req, res, next) => {
+router.post('/getspotbyid', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
@@ -139,15 +139,18 @@ router.get('/getspotbyid', async (req, res, next) => {
 
     })
 })
-router.get('/gethostspots', async (req, res, next) => {
+router.post('/gethostspots', async (req, res, next) => {
     let allSpots = [];
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
-            if(good[i].Record.HostID === req.body.HostID) {
+            console.log(good[i].Record.HostID)
+            console.log(req.body.HostID + "\n")
+            if(good[i].Record.HostID.substr(6) == req.body.HostID) {
                 allSpots.push(good[i].Record);
             }
         }
+        console.log(allSpots)
         res.send(allSpots)
     })
 })
