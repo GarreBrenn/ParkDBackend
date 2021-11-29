@@ -178,22 +178,22 @@ router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
-            if(good[i].Record.id === req.body.id) {
+            if(good[i].Record.ID == req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
                 for(let j = 0; j < curReservations.length; j++) {
-                    if((req.body.timeIn >= curReservations[j].resTimeIn && req.body.timeIn <= curReservations[j].resTimeOut) ||
-                        req.body.timeOut >= curReservations[j].resTimeIn && req.body.timeOut <= curReservations[j].resTimeOut) {
+                    if((timeIn >= new Date(curReservations[j].resTimeIn) && timeIn <= new Date(curReservations[j].resTimeOut)) ||
+                        (timeOut >= new Date(curReservations[j].resTimeIn) && timeOut <= new Date(curReservations[j].resTimeOut))) {
                         flag = false;
                     }
                 }
                 if(flag) {
                     curReservations.push({
-                        resTimeIn: req.body.timeIn,
-                        resTimeOut: req.body.timeOut,
-                        guestId: req.body.guestId,
+                        resTimeIn: parseInt(req.body.timeIn),
+                        resTimeOut: parseInt(req.body.timeOut),
+                        guestId: req.body.guestId
                     })
-                    await main.appendCheckin(req.body.id, curReservations);
+                    await main.appendCheckin(req.body.id, JSON.stringify(curReservations));
                     res.send("success :)")
                 }
                 else {
