@@ -113,9 +113,9 @@ exports.login = async (req, res) =>{
             // the user's been logged in, now put the cookie in the browser.
             //res.cookie('jwt', token, cookieOptions);
             //document.cookie = "email=test.com; SameSite=None";
-            res.cookie('title', 'WowItsNotHashedAnymore@');
+            
             res.cookie('email', results[0].email)
-            res.cookie('password', results[0].password)
+            //res.cookie('password', results[0].password)
             // TODO: CHANGE THIS TO GARRETT'S HOMEPAGE
             res.status(200).redirect("http://localhost:3006"); // redirect user to homepage
 
@@ -143,38 +143,38 @@ exports.logout = async(req, res)=>{
 }
 
 
-exports.isLoggedIn = async(req, res, next) =>{
-    // check to see if jwt a cookie exists
-    console.log("hello world");
-    console.log(req);
-    console.log(req.cookies);
-    if (req.cookies.jwt){
-        try{
-            // check if the cookie token matches my super secret password as defined in the .env file
-            const decoded = await promisify(jwt.verify)(req.cookies.jtw, process.env.JWT_SECRET);
-            console.log(decoded);
+// exports.isLoggedIn = async(req, res, next) =>{
+//     // check to see if jwt a cookie exists
+//     console.log("hello world");
+//     console.log(req);
+//     console.log(req.cookies);
+//     if (req.cookies.jwt){
+//         try{
+//             // check if the cookie token matches my super secret password as defined in the .env file
+//             const decoded = await promisify(jwt.verify)(req.cookies.jtw, process.env.JWT_SECRET);
+//             console.log(decoded);
 
-            // check if the user still exists
-            db.query('SELECT * FROM users WHERE email = ?', [decoded.email], (error, result) =>{
-                console.log(result);
-                if(!result){
-                    return next();
-                }
-                req.userMail = result[0]; // email is the 0'th collumn in the database
-                res.user = result[0];
-                return next();
-            });
-        }
-        catch(error){
-        console.log(error);
-        return next();
-        }
-    }
-    else{
-        // the nerd isn't logged in
-        //res.status(403).redirect('/login')
-        next();
-    }
-    // do something else with the next()
-    next();
-}
+//             // check if the user still exists
+//             db.query('SELECT * FROM users WHERE email = ?', [decoded.email], (error, result) =>{
+//                 console.log(result);
+//                 if(!result){
+//                     return next();
+//                 }
+//                 req.userMail = result[0]; // email is the 0'th collumn in the database
+//                 res.user = result[0];
+//                 return next();
+//             });
+//         }
+//         catch(error){
+//         console.log(error);
+//         return next();
+//         }
+//     }
+//     else{
+//         // the nerd isn't logged in
+//         //res.status(403).redirect('/login')
+//         next();
+//     }
+//     // do something else with the next()
+//     next();
+// }
