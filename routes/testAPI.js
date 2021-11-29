@@ -178,6 +178,8 @@ router.post('/reserve', async (req, res, next) => {
     let allAssets = await main.query();
     parseAssets(allAssets).then(async (good, bad) => {
         for(let i = 0; i < good.length; i++) {
+            let timeIn = new Date(parseInt(req.body.timeIn));
+            let timeOut = new Date(parseInt(req.body.timeOut));
             if(good[i].Record.ID == req.body.id) {
                 let curReservations = good[i].Record.Reservations;
                 let flag = true;
