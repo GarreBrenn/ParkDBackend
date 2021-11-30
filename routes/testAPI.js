@@ -177,7 +177,7 @@ router.post('/gethostspots', async (req, res, next) => {
         for(let i = 0; i < good.length; i++) {
             console.log(good[i].Record.HostID)
             console.log(req.body.HostID + "\n")
-            if(good[i].Record.HostID.substr(6) == req.body.HostID) {
+            if(good[i].Record.HostID == req.body.HostID) {
                 allSpots.push(good[i].Record);
             }
         }
