@@ -3,7 +3,7 @@ var router = express.Router();
 const authController = require('../controllers/auth');
 const mysql = require("mysql");
 const jwt = require('jsonwebtoken');
-
+var idCount = 9;
 const db = mysql.createConnection({
     host: 'localhost', // or change to public IP if using an SQL server on another computer
     user: 'root',
@@ -120,7 +120,7 @@ router.post('/buy', async (req, res, next) => {
 });
 router.post('/sell', async (req, res, next) => {
     let output = await main.putAsset(
-        nextID(),req.body.latlong,req.body.address,req.body.type,
+        idCount++,req.body.latlong,req.body.address,req.body.type,
         req.body.photo,req.body.hostID,"Available",req.body.guestID,
         req.body.price,"","","","");
         return output;
@@ -291,8 +291,3 @@ router.get('/isLoggedIn', async(req, res, next) =>{
     // do something else with the next()
     next();
 })
-
-function nextID() {
-    let allAssets = await main.query();
-    return JSON.parse(allAssets).length + 1;
-}
