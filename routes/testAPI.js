@@ -83,6 +83,37 @@ router.post('/getreservation', async (req, res, next) => {
     	}
     });
 });
+router.post('/getreservations', async (req, res, next) => {
+    //THIS ASSUMES A GUEST ONLY MAKES ONE RESERVATION
+    let output = await main.query();
+    parseAssets(output).then((output, bad) => {
+        try {
+            let input = req.body;
+            console.log("input")
+            console.log(input)
+                output = output.filter((d) => {
+                    for (let i = 0; i < d.Record.Reservations.length; i++) {
+                        const reservation = d.Record.Reservations[i];
+                        console.log(reservation)
+                        console.log("input guest ID: " + input.guestID);
+                        console.log("record spot ID: " + reservation.guestId);
+                        if (reservation.guestId == input.guestID) {
+                            console.log("this should pass\n");
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                const response = {
+                    valid: true ? output[0] != null : false,
+                    spots: output
+                }
+                res.send(response);
+        } catch (e) {
+            res.send(e)
+        }
+    });
+});
 router.post('/buy', async (req, res, next) => {
     let output = await main.purchaseSpotAsset(req.body.id, req.body.timeIn, req.body.timeOut);
     res.send(output)
