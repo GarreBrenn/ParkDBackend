@@ -202,24 +202,29 @@ class AssetTransfer extends Contract {
         if (exists) {
             throw new Error(`The asset ${id} already exists`);
         }
-        const asset = {
-            ID: id, 
-            LatLong: lat_long, 
-            Address: address, 
-            Type: type, 
-            Photos: photo, 
-            HostID: hostID, 
-            GuestID: guestID, 
-            Price: price,
-            Reservation: [],
-            ReservationTimeIn: resTimeIn, 
-            ReservationTimeOut: resTimeOut, 
-            CheckInTime: checkInTime, 
-            CheckOutTime: checkOutTime,
-            State: state
+        try {
+            const asset = {
+                ID: id, 
+                LatLong: lat_long, 
+                Address: address, 
+                Type: type, 
+                Photos: photo, 
+                HostID: hostID, 
+                GuestID: guestID, 
+                Price: price,
+                Reservation: new Array(),
+                ReservationTimeIn: resTimeIn, 
+                ReservationTimeOut: resTimeOut, 
+                CheckInTime: checkInTime, 
+                CheckOutTime: checkOutTime,
+                State: state
+            }
+            await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+            return JSON.stringify(asset);
         }
-        await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
-        return JSON.stringify(asset);
+        catch(e) {
+            throw new Error(e);
+        }
     }
     async purchaseSpotAsset(ctx, id, guestID, timeIn, timeOut) {
         const assetString = await this.ReadAsset(ctx, id);
