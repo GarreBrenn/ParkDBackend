@@ -120,7 +120,7 @@ router.post('/buy', async (req, res, next) => {
 });
 router.post('/sell', async (req, res, next) => {
     let output = await main.putAsset(
-        req.body.id,req.body.latlong,req.body.address,req.body.type,
+        nextID(),req.body.latlong,req.body.address,req.body.type,
         req.body.photo,req.body.hostID,"Available",req.body.guestID,
         req.body.price,"","","","");
         return output;
@@ -291,3 +291,8 @@ router.get('/isLoggedIn', async(req, res, next) =>{
     // do something else with the next()
     next();
 })
+
+function nextID() {
+    let allAssets = await main.query();
+    return JSON.parse(allAssets).length + 1;
+}
