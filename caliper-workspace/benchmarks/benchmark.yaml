@@ -1,0 +1,16 @@
+test:
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: RegisterSpot
+      description: RegisterSpotAsset 500tx at 25tps
+      txNumber: 500
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd
