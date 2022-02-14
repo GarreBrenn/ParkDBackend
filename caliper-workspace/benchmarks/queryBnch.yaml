@@ -1,0 +1,62 @@
+test:
+  name: Query benchmark
+  description: Tests Query with 1000Tx at 100,150,200,250,300 tps
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: Query ~100tps
+      description: Query 1000tx at 100tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 100
+      workload:
+        module: workload/query.js
+        arguments:
+          contractId: parkd
+    - label: Query ~150tps
+      description: Query 1000tx at 150tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 150
+      workload:
+        module: workload/query.js
+        arguments:
+          contractId: parkd
+    - label: Query ~200tps
+      description: Query 1000tx at 200tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 200
+      workload:
+        module: workload/query.js
+        arguments:
+          contractId: parkd
+    - label: Query ~250
+      description: Query 1000tx at 250tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 250
+      workload:
+        module: workload/query.js
+        arguments:
+          contractId: parkd
+    - label: Query ~300tps
+      description: Query 1000tx at 300tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 300
+      workload:
+        module: workload/query.js
+        arguments:
+          contractId: parkd

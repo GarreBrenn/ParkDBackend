@@ -1,0 +1,62 @@
+test:
+  name: RegisterSpot benchmark
+  description: Tests RegisterSpot with 1000Tx at 100,150,200,250,300 tps
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: RegisterSpot ~100tps
+      description: RegisterSpotAsset 1000tx at 100tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 100
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd
+    - label: RegisterSpot ~150tps
+      description: RegisterSpotAsset 1000tx at 150tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 150
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd
+    - label: RegisterSpot ~200tps
+      description: RegisterSpotAsset 1000tx at 200tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 200
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd
+    - label: RegisterSpot ~250tps
+      description: RegisterSpotAsset 1000tx at 250tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 250
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd
+    - label: RegisterSpot ~300tps
+      description: RegisterSpotAsset 1000tx at 300tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 300
+      workload:
+        module: workload/registerSpotAsset.js
+        arguments:
+          contractId: parkd

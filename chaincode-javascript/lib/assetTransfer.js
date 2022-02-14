@@ -13,165 +13,165 @@ class AssetTransfer extends Contract {
     async InitLedger(ctx) {
         const assets = [
             {
-            ID: "1", 
-            LatLong: "32.7824_-79.9382", 
-            Address: "39 Coming Street, Charleston, South Carolina", 
-            Type: "Driveway", 
-            Photos: "photosNull", 
-            HostID: "hostID1", 
-            GuestID: "guestIDNull", 
-            Price: 10,
-            Reservations: [{
-                resTimeIn: 199999,
-                resTimeOut: 200000,
-                guestId: 1
-            }],
-            ReservationTimeIn: "resTimeInNull", 
-            ReservationTimeOut: "resTimeOutNull", 
-            CheckInTime: "checkTimeInNull", 
-            CheckOutTime: "checkTimeOutNull",
-            State: "Available" 
-            },
-            {
-                ID: "2", 
-                LatLong: "32.782820_-79.938293", 
-                Address: "58 Coming St, Charleston, South Carolina", 
-                Type: "Street", 
-                Photos: "photosNull", 
-                HostID: "hostID2", 
-                GuestID: "guestIDNull", 
-                Price: 5,
-                Reservations: [{
-                    resTimeIn: 199999,
-                    resTimeOut: 200000,
-                    guestId: 1
-                }],
-                ReservationTimeIn: "resTimeInNull", 
-                ReservationTimeOut: "resTimeOutNull", 
-                CheckInTime: "checkTimeInNull", 
-                CheckOutTime: "checkTimeOutNull",
-                State: "Available" 
-            },
-            {
-                ID: "3", 
-                LatLong: "32.7844_-79.9382", 
-                Address: "99 Coming Street, Charleston, South Carolina", 
-                Type: "Driveway", 
-                Photos: "photosNull", 
-                HostID: "hostID1", 
-                GuestID: "guestIDNull", 
+                ID: "1",
+                LatLong: "32.7824_-79.9382",
+                Address: "39 Coming Street, Charleston, South Carolina",
+                Type: "Driveway",
+                Photos: "photosNull",
+                HostID: "hostID1",
+                GuestID: "guestIDNull",
                 Price: 10,
                 Reservations: [{
                     resTimeIn: 199999,
                     resTimeOut: 200000,
                     guestId: 1
                 }],
-                ReservationTimeIn: "resTimeInNull", 
-                ReservationTimeOut: "resTimeOutNull", 
-                CheckInTime: "checkTimeInNull", 
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
                 CheckOutTime: "checkTimeOutNull",
-                State: "Available" 
-                },
-                {
-                    ID: "4", 
-                    LatLong: "32.782620_-79.938493", 
-                    Address: "22 Coming St, Charleston, South Carolina", 
-                    Type: "Street", 
-                    Photos: "photosNull", 
-                    HostID: "hostID2", 
-                    GuestID: "guestIDNull", 
-                    Price: 5,
-                    Reservations: [{
-                        resTimeIn: 199999,
-                        resTimeOut: 200000,
-                        guestId: 1
-                    }],
-                    ReservationTimeIn: "resTimeInNull", 
-                    ReservationTimeOut: "resTimeOutNull", 
-                    CheckInTime: "checkTimeInNull", 
-                    CheckOutTime: "checkTimeOutNull",
-                    State: "Available" 
-                },
-                {
-                    ID: "5", 
-                    LatLong: "32.7834_-79.9482", 
-                    Address: "41 Coming Street, Charleston, South Carolina", 
-                    Type: "Driveway", 
-                    Photos: "photosNull", 
-                    HostID: "hostID1", 
-                    GuestID: "guestIDNull", 
-                    Price: 10,
-                    Reservations: [{
-                        resTimeIn: 199999,
-                        resTimeOut: 200000,
-                        guestId: 1
-                    }],
-                    ReservationTimeIn: "resTimeInNull", 
-                    ReservationTimeOut: "resTimeOutNull", 
-                    CheckInTime: "checkTimeInNull", 
-                    CheckOutTime: "checkTimeOutNull",
-                    State: "Available" 
-                    },
-                    {
-                        ID: "6", 
-                        LatLong: "32.782822_-79.938296", 
-                        Address: "60 Coming St, Charleston, South Carolina", 
-                        Type: "Street", 
-                        Photos: "photosNull", 
-                        HostID: "hostID2", 
-                        GuestID: "guestIDNull", 
-                        Price: 5,
-                        Reservations: [{
-                            resTimeIn: 199999,
-                            resTimeOut: 200000,
-                            guestId: 1
-                        }],
-                        ReservationTimeIn: "resTimeInNull", 
-                        ReservationTimeOut: "resTimeOutNull", 
-                        CheckInTime: "checkTimeInNull", 
-                        CheckOutTime: "checkTimeOutNull",
-                        State: "Available" 
-                    },
-                    {
-                        ID: "7", 
-                        LatLong: "32.7876_-79.9376", 
-                        Address: "222 Coming Street, Charleston, South Carolina", 
-                        Type: "Driveway", 
-                        Photos: "photosNull", 
-                        HostID: "hostID1", 
-                        GuestID: "guestIDNull", 
-                        Price: 10,
-                        Reservations: [{
-                            resTimeIn: 199999,
-                            resTimeOut: 200000,
-                            guestId: 1
-                        }],
-                        ReservationTimeIn: "resTimeInNull", 
-                        ReservationTimeOut: "resTimeOutNull", 
-                        CheckInTime: "checkTimeInNull", 
-                        CheckOutTime: "checkTimeOutNull",
-                        State: "Available" 
-                        },
-                        {
-                            ID: "8", 
-                            LatLong: "32.782840_-79.938223", 
-                            Address: "1 Coming St, Charleston, South Carolina", 
-                            Type: "Street", 
-                            Photos: "photosNull", 
-                            HostID: "hostID2", 
-                            GuestID: "guestIDNull", 
-                            Price: 5,
-                            Reservations: [{
-                                resTimeIn: 1637121835000,
-                                resTimeOut: 1637125835000,
-                                guestId: 1
-                            }],
-                            ReservationTimeIn: "resTimeInNull", 
-                            ReservationTimeOut: "resTimeOutNull", 
-                            CheckInTime: "checkTimeInNull", 
-                            CheckOutTime: "checkTimeOutNull",
-                            State: "Available" 
-                        }
+                State: "Available"
+            },
+            {
+                ID: "2",
+                LatLong: "32.782820_-79.938293",
+                Address: "58 Coming St, Charleston, South Carolina",
+                Type: "Street",
+                Photos: "photosNull",
+                HostID: "hostID2",
+                GuestID: "guestIDNull",
+                Price: 5,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "3",
+                LatLong: "32.7844_-79.9382",
+                Address: "99 Coming Street, Charleston, South Carolina",
+                Type: "Driveway",
+                Photos: "photosNull",
+                HostID: "hostID1",
+                GuestID: "guestIDNull",
+                Price: 10,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "4",
+                LatLong: "32.782620_-79.938493",
+                Address: "22 Coming St, Charleston, South Carolina",
+                Type: "Street",
+                Photos: "photosNull",
+                HostID: "hostID2",
+                GuestID: "guestIDNull",
+                Price: 5,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "5",
+                LatLong: "32.7834_-79.9482",
+                Address: "41 Coming Street, Charleston, South Carolina",
+                Type: "Driveway",
+                Photos: "photosNull",
+                HostID: "hostID1",
+                GuestID: "guestIDNull",
+                Price: 10,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "6",
+                LatLong: "32.782822_-79.938296",
+                Address: "60 Coming St, Charleston, South Carolina",
+                Type: "Street",
+                Photos: "photosNull",
+                HostID: "hostID2",
+                GuestID: "guestIDNull",
+                Price: 5,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "7",
+                LatLong: "32.7876_-79.9376",
+                Address: "222 Coming Street, Charleston, South Carolina",
+                Type: "Driveway",
+                Photos: "photosNull",
+                HostID: "hostID1",
+                GuestID: "guestIDNull",
+                Price: 10,
+                Reservations: [{
+                    resTimeIn: 199999,
+                    resTimeOut: 200000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            },
+            {
+                ID: "8",
+                LatLong: "32.782840_-79.938223",
+                Address: "1 Coming St, Charleston, South Carolina",
+                Type: "Street",
+                Photos: "photosNull",
+                HostID: "hostID2",
+                GuestID: "guestIDNull",
+                Price: 5,
+                Reservations: [{
+                    resTimeIn: 1637121835000,
+                    resTimeOut: 1637125835000,
+                    guestId: 1
+                }],
+                ReservationTimeIn: "resTimeInNull",
+                ReservationTimeOut: "resTimeOutNull",
+                CheckInTime: "checkTimeInNull",
+                CheckOutTime: "checkTimeOutNull",
+                State: "Available"
+            }
         ];
 
         for (const asset of assets) {
@@ -204,25 +204,25 @@ class AssetTransfer extends Contract {
         }
         try {
             const asset = {
-                ID: id, 
-                LatLong: lat_long, 
-                Address: address, 
-                Type: type, 
-                Photos: photo, 
-                HostID: hostID, 
-                GuestID: guestID, 
+                ID: id,
+                LatLong: lat_long,
+                Address: address,
+                Type: type,
+                Photos: photo,
+                HostID: hostID,
+                GuestID: guestID,
                 Price: price,
-                Reservation: new Array(),
-                ReservationTimeIn: resTimeIn, 
-                ReservationTimeOut: resTimeOut, 
-                CheckInTime: checkInTime, 
+                Reservations: new Array(),
+                ReservationTimeIn: resTimeIn,
+                ReservationTimeOut: resTimeOut,
+                CheckInTime: checkInTime,
                 CheckOutTime: checkOutTime,
                 State: state
             }
             await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
             return JSON.stringify(asset);
         }
-        catch(e) {
+        catch (e) {
             throw new Error(e);
         }
     }
@@ -244,13 +244,13 @@ class AssetTransfer extends Contract {
     async updateAssetP(ctx, id, price, photos, state) {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
-        if(price) {
+        if (price) {
             asset.Price = price;
         }
-        if(photos) {
+        if (photos) {
             asset.Photos = photos;
         }
-        if(state){
+        if (state) {
             asset.State = state;
         }
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
@@ -344,6 +344,12 @@ class AssetTransfer extends Contract {
         let res = JSON.parse(reservation)
         asset.Reservations = res;
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    }
+
+    async GetReservations(ctx, id) {
+        const assetString = await this.ReadAsset(ctx, id);
+        const asset = JSON.parse(assetString);
+        return JSON.stringify(asset.Reservations);
     }
 }
 

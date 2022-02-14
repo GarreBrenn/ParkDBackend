@@ -1,0 +1,62 @@
+test:
+  name: reserveSpot benchmark
+  description: Tests ReserveSpot with 1000Tx at 100,150,200,250,300 tps
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: reserveSpot ~100tps
+      description: reserveSpot 1000tx at 100tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 100
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
+    - label: reserveSpot ~150tps
+      description: reserveSpot 1000tx at 150tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 150
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
+    - label: reserveSpot ~200tps
+      description: reserveSpot 1000tx at 200tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 200
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
+    - label: reserveSpot ~250tps
+      description: reserveSpot 1000tx at 250tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 250
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
+    - label: reserveSpot ~300tps
+      description: reserveSpot 1000tx at 300tps
+      txNumber: 1000
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 300
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
