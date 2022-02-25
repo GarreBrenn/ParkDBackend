@@ -15,5 +15,6 @@
     "fabric-common": "^2.1.0",
     "fabric-network": "^2.1.0",
     "fabric-protos": "^2.1.0"
-  }
+  },
+  "devDependencies": {}
 }

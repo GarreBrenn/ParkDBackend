@@ -1,0 +1,18 @@
+test:
+  name: Test benchmark
+  description: Test
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: test
+      description: test 100tx at 10tps
+      txNumber: 100
+      rateControl: 
+        type: fixed-rate
+        opts:
+          tps: 10
+      workload:
+        module: workload/reserveSpot.js
+        arguments:
+          contractId: parkd
